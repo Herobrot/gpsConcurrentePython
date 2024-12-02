@@ -65,7 +65,7 @@ class GPSProcessor:
 
             print(f"[PARSE] Coordenadas parseadas: Lat {latitude}, Long {longitude}")
             return latitude, longitude
-        print("[PARSE] No se pudo parsear")
+        print(f"[PARSE] No se pudo parsear")
         return None, None
 
     def read_gps_data(self):
@@ -74,11 +74,10 @@ class GPSProcessor:
             gps_serial = self.connect_serial()
             while not self.stop_event.is_set():
                 try:
-                    line = '$GPGGA'
+                    line = gps_serial.readline().decode('ascii', errors='replace')
                     print(f"[READ] Se recibió: {line.strip()}")
                     if line.startswith('$GPGGA'):
-                        latitude = "16.308558"
-                        longitude = "-93.744185"
+                        latitude, longitude = self.parse_gpgga(line)
                         if latitude is not None and longitude is not None:
                             self.gps_data_queue.put((latitude, longitude))
                             print(f"[QUEUE] Coordenadas agregadas: {latitude}, {longitude}")
