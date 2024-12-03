@@ -113,7 +113,7 @@ class GPSProcessor:
 
     def send_to_endpoint_worker(self):
         #Actualizar url a la real cuando se actualice el git
-        url = "https://sw972tdv-4000.usw3.devtunnels.ms/kits/66a33f426bc60fa809490bbb/gps"
+        url = "http://35.153.187.71/kits/66a33f426bc60fa809490bbb/gps"
         print("[THREAD] Hilo de Envío del endpoint inicio")
         while not self.stop_event.is_set():
             try:
